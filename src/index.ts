@@ -45,6 +45,10 @@ interface PendingOrder {
 }
 const userPendingOrders = new Map<string, PendingOrder>();
 
+// ระบบจำกัดการตรวจสลิป (Demo) ป้องกันคนสแปม API SlipOK
+const MAX_SLIP_PER_USER = 3;
+const userSlipUsage = new Map<string, number>();
+
 // Webhook endpoint
 app.post(
   '/webhook',
@@ -93,7 +97,25 @@ async function handleEvent(event: WebhookEvent) {
   if (event.message.type === 'image') {
     console.log(`[Event] ได้รับรูปภาพสลิปจาก User ID: ${userId}`);
 
+    // ตรวจสอบโควต้าการเช็คสลิป
+    const currentUsage = userSlipUsage.get(userId) || 0;
+    if (currentUsage >= MAX_SLIP_PER_USER) {
+      await client.replyMessage({
+        replyToken: replyToken,
+        messages: [
+          {
+            type: 'text',
+            text: '🛑 คุณใช้โควต้าการทดสอบตรวจสลิปครบ 3 ครั้งแล้วครับ (สำหรับ Demo)\n\nหากสนใจนำระบบไปใช้งานจริงแบบไม่จำกัด สามารถติดต่อสั่งซื้อ/สอบถามได้ผ่านลิงก์ Fastwork เลยครับ 🙏\nhttps://fastwork.co/user/toddev/shop-and-page-admin-25924850'
+          }
+        ]
+      });
+      return null;
+    }
+
     try {
+      // อัปเดตโควต้า
+      userSlipUsage.set(userId, currentUsage + 1);
+
       // ดาวน์โหลดรูปภาพจาก LINE Server
       const stream = await blobClient.getMessageContent(event.message.id);
       const chunks: Buffer[] = [];
