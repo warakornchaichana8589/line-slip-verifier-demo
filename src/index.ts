@@ -12,7 +12,8 @@ import {
   createSuccessFlexMessage,
   createUnderpaidFlexMessage,
   createProductCatalogFlexMessage,
-  createFailedTextMessage
+  createFailedTextMessage,
+  createWelcomeFlexMessage
 } from './services/lineFlex.js';
 import { generateAutoReply } from './services/aiChat.js';
 
@@ -70,12 +71,23 @@ app.get('/health', (_req: Request, res: Response) => {
 });
 
 async function handleEvent(event: WebhookEvent) {
-  if (event.type !== 'message') {
+  const replyToken = (event as any).replyToken;
+  const userId = event.source?.userId || 'unknown';
+
+  // 0. กรณีผู้ใช้แอดบอทครั้งแรก (Follow Event)
+  if (event.type === 'follow') {
+    if (replyToken) {
+      await client.replyMessage({
+        replyToken: replyToken,
+        messages: [createWelcomeFlexMessage()]
+      });
+    }
     return null;
   }
 
-  const replyToken = event.replyToken;
-  const userId = event.source?.userId || 'unknown';
+  if (event.type !== 'message') {
+    return null;
+  }
 
   // 1. กรณีผู้ใช้ส่งรูปภาพ (สลิปโอนเงิน)
   if (event.message.type === 'image') {

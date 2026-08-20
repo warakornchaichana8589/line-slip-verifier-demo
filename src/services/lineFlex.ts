@@ -356,3 +356,90 @@ export function createUnderpaidFlexMessage(data: {
 export function createFailedTextMessage(reason: string): string {
   return `⚠️ ไม่สามารถยืนยันยอดเงินจากสลิปนี้ได้\nสาเหตุ: ${reason}\n\nหากท่านได้โอนเงินจริง กรุณารอแอดมินเข้ามาตรวจสอบให้สักครู่นะครับ 🙏`;
 }
+
+/**
+ * สร้าง Flex Message ต้อนรับและแนะนำวิธีทดสอบ (Welcome & Onboarding)
+ */
+export function createWelcomeFlexMessage(): messagingApi.FlexMessage {
+  return {
+    type: 'flex',
+    altText: '✨ ยินดีต้อนรับสู่ AutoFlow Bot (พิมพ์เพื่อเริ่มทดสอบ)',
+    contents: {
+      type: 'bubble',
+      header: {
+        type: 'box',
+        layout: 'vertical',
+        backgroundColor: '#0056ff',
+        paddingAll: '16px',
+        contents: [
+          {
+            type: 'text',
+            text: '✨ ยินดีต้อนรับสู่ AutoFlow',
+            weight: 'bold',
+            color: '#FFFFFF',
+            size: 'lg',
+            align: 'center'
+          }
+        ]
+      },
+      body: {
+        type: 'box',
+        layout: 'vertical',
+        spacing: 'md',
+        contents: [
+          {
+            type: 'text',
+            text: 'นี่คือบอททดสอบระบบตรวจสลิปอัตโนมัติ 🚀 ลองกดปุ่มด้านล่างเพื่อเริ่มเล่นได้เลยครับ!',
+            size: 'sm',
+            color: '#4B5563',
+            wrap: true,
+            align: 'center'
+          },
+          {
+            type: 'separator',
+            margin: 'md'
+          },
+          {
+            type: 'box',
+            layout: 'vertical',
+            spacing: 'sm',
+            margin: 'md',
+            contents: [
+              {
+                type: 'button',
+                style: 'primary',
+                color: '#3B82F6',
+                height: 'sm',
+                action: {
+                  type: 'message',
+                  label: '🛍️ ดูรายการสินค้า (จำลองสั่งซื้อ)',
+                  text: 'ดูสินค้า'
+                }
+              },
+              {
+                type: 'button',
+                style: 'secondary',
+                height: 'sm',
+                action: {
+                  type: 'message',
+                  label: '🤖 ทดสอบ AI คุยโต้ตอบ',
+                  text: 'รับทำระบบตรวจสลิปไหมครับ?'
+                }
+              },
+              {
+                type: 'button',
+                style: 'secondary',
+                height: 'sm',
+                action: {
+                  type: 'message',
+                  label: '💡 วิธีการใช้งาน',
+                  text: 'ใช้งานยังไง'
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  };
+}
