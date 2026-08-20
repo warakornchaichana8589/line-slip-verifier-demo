@@ -1,0 +1,26 @@
+{
+  "name": "line-slip-verifier",
+  "version": "1.0.0",
+  "description": "LINE OA Auto Slip Verification & Google Sheets Sync Bot",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@line/bot-sdk": "^9.6.0",
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "form-data": "^4.0.2",
+    "google-auth-library": "^9.15.1",
+    "googleapis": "^144.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.4",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3"
+  }
+}

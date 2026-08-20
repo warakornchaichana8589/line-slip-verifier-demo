@@ -1,0 +1,49 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.appendToGoogleSheet = appendToGoogleSheet;
+const googleapis_1 = require("googleapis");
+async function appendToGoogleSheet(record) {
+    const sheetId = process.env.GOOGLE_SHEET_ID;
+    const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
+    let privateKey = process.env.GOOGLE_PRIVATE_KEY;
+    if (!sheetId || !clientEmail || !privateKey) {
+        console.warn('[Google Sheets] ข้อมูล Credentials ยังไม่ครบ ข้ามการบันทึกลง Sheets');
+        return false;
+    }
+    // แก้ไข newline ใน private key
+    privateKey = privateKey.replace(/\\n/g, '\n');
+    try {
+        const auth = new googleapis_1.google.auth.JWT({
+            email: clientEmail,
+            key: privateKey,
+            scopes: ['https://www.googleapis.com/auth/spreadsheets']
+        });
+        const sheets = googleapis_1.google.sheets({ version: 'v4', auth });
+        // เพิ่มแถวใหม่ต่อท้าย
+        await sheets.spreadsheets.values.append({
+            spreadsheetId: sheetId,
+            range: 'Sheet1!A:H',
+            valueInputOption: 'USER_ENTERED',
+            requestBody: {
+                values: [
+                    [
+                        new Date().toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' }),
+                        record.transRef,
+                        record.senderName,
+                        record.senderBank,
+                        record.amount,
+                        record.receiverAccount,
+                        record.userId,
+                        record.status
+                    ]
+                ]
+            }
+        });
+        console.log(`[Google Sheets] บันทึกยอด ${record.amount} บาท (Ref: ${record.transRef}) สำเร็จ`);
+        return true;
+    }
+    catch (error) {
+        console.error('[Google Sheets Error]:', error.message);
+        return false;
+    }
+}
