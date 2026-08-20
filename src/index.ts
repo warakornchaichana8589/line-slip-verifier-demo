@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import {
   middleware,
   messagingApi,
@@ -244,9 +243,6 @@ async function handleEvent(event: WebhookEvent) {
 
   return null;
 }
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Serve static files for the landing page
 app.use(express.static(path.join(__dirname, '../public')));
