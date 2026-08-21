@@ -1,9 +1,138 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.createProductCatalogFlexMessage = createProductCatalogFlexMessage;
 exports.createSuccessFlexMessage = createSuccessFlexMessage;
+exports.createUnderpaidFlexMessage = createUnderpaidFlexMessage;
 exports.createFailedTextMessage = createFailedTextMessage;
+exports.createWelcomeFlexMessage = createWelcomeFlexMessage;
 /**
- * สร้าง Flex Message ตอบกลับเมื่อสลิปผ่านการตรวจสอบ
+ * สร้าง Flex Message แสดงรายการสินค้าตัวอย่างและปุ่มสั่งซื้อ
+ */
+function createProductCatalogFlexMessage() {
+    return {
+        type: 'flex',
+        altText: '🛍️ รายการสินค้าและแพ็กเกจ',
+        contents: {
+            type: 'carousel',
+            contents: [
+                {
+                    type: 'bubble',
+                    size: 'kilo',
+                    header: {
+                        type: 'box',
+                        layout: 'vertical',
+                        backgroundColor: '#3B82F6',
+                        contents: [
+                            {
+                                type: 'text',
+                                text: '📦 แพ็กเกจ A (ชุดเริ่มต้น)',
+                                weight: 'bold',
+                                color: '#FFFFFF',
+                                size: 'sm'
+                            }
+                        ]
+                    },
+                    body: {
+                        type: 'box',
+                        layout: 'vertical',
+                        spacing: 'sm',
+                        contents: [
+                            {
+                                type: 'text',
+                                text: '฿199.00',
+                                weight: 'bold',
+                                size: 'xl',
+                                color: '#1E3A8A'
+                            },
+                            {
+                                type: 'text',
+                                text: 'เหมาะสำหรับทดลองระบบตรวจสลิป',
+                                size: 'xs',
+                                color: '#6B7280',
+                                wrap: true
+                            }
+                        ]
+                    },
+                    footer: {
+                        type: 'box',
+                        layout: 'vertical',
+                        contents: [
+                            {
+                                type: 'button',
+                                style: 'primary',
+                                color: '#3B82F6',
+                                height: 'sm',
+                                action: {
+                                    type: 'message',
+                                    label: 'เลือกแพ็กนี้ (199.-)',
+                                    text: 'สั่งซื้อ แพ็กเกจ A 199'
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    type: 'bubble',
+                    size: 'kilo',
+                    header: {
+                        type: 'box',
+                        layout: 'vertical',
+                        backgroundColor: '#8B5CF6',
+                        contents: [
+                            {
+                                type: 'text',
+                                text: '🚀 แพ็กเกจ B (ชุดยอดนิยม)',
+                                weight: 'bold',
+                                color: '#FFFFFF',
+                                size: 'sm'
+                            }
+                        ]
+                    },
+                    body: {
+                        type: 'box',
+                        layout: 'vertical',
+                        spacing: 'sm',
+                        contents: [
+                            {
+                                type: 'text',
+                                text: '฿499.00',
+                                weight: 'bold',
+                                size: 'xl',
+                                color: '#4C1D95'
+                            },
+                            {
+                                type: 'text',
+                                text: 'ทดสอบการโอนเต็มจำนวน หรือโอนขาด',
+                                size: 'xs',
+                                color: '#6B7280',
+                                wrap: true
+                            }
+                        ]
+                    },
+                    footer: {
+                        type: 'box',
+                        layout: 'vertical',
+                        contents: [
+                            {
+                                type: 'button',
+                                style: 'primary',
+                                color: '#8B5CF6',
+                                height: 'sm',
+                                action: {
+                                    type: 'message',
+                                    label: 'เลือกแพ็กนี้ (499.-)',
+                                    text: 'สั่งซื้อ แพ็กเกจ B 499'
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    };
+}
+/**
+ * สร้าง Flex Message เมื่อชำระเงินครบถ้วน
  */
 function createSuccessFlexMessage(data) {
     return {
@@ -19,7 +148,7 @@ function createSuccessFlexMessage(data) {
                 contents: [
                     {
                         type: 'text',
-                        text: '✅ ได้รับยอดชำระเงินเรียบร้อยแล้ว',
+                        text: '✅ ได้รับยอดชำระเงินครบถ้วน',
                         weight: 'bold',
                         color: '#FFFFFF',
                         size: 'md',
@@ -54,42 +183,24 @@ function createSuccessFlexMessage(data) {
                                 type: 'box',
                                 layout: 'horizontal',
                                 contents: [
-                                    {
-                                        type: 'text',
-                                        text: 'ผู้โอน:',
-                                        size: 'sm',
-                                        color: '#6B7280',
-                                        flex: 2
-                                    },
-                                    {
-                                        type: 'text',
-                                        text: data.senderName || '-',
-                                        size: 'sm',
-                                        color: '#111827',
-                                        flex: 4,
-                                        align: 'end'
-                                    }
+                                    { type: 'text', text: 'รายการ:', size: 'sm', color: '#6B7280', flex: 2 },
+                                    { type: 'text', text: data.packageName || 'สินค้า/บริการ', size: 'sm', color: '#111827', flex: 4, align: 'end' }
                                 ]
                             },
                             {
                                 type: 'box',
                                 layout: 'horizontal',
                                 contents: [
-                                    {
-                                        type: 'text',
-                                        text: 'เลขอ้างอิง:',
-                                        size: 'sm',
-                                        color: '#6B7280',
-                                        flex: 2
-                                    },
-                                    {
-                                        type: 'text',
-                                        text: data.transRef,
-                                        size: 'xs',
-                                        color: '#111827',
-                                        flex: 4,
-                                        align: 'end'
-                                    }
+                                    { type: 'text', text: 'ผู้โอน:', size: 'sm', color: '#6B7280', flex: 2 },
+                                    { type: 'text', text: data.senderName || '-', size: 'sm', color: '#111827', flex: 4, align: 'end' }
+                                ]
+                            },
+                            {
+                                type: 'box',
+                                layout: 'horizontal',
+                                contents: [
+                                    { type: 'text', text: 'เลขอ้างอิง:', size: 'sm', color: '#6B7280', flex: 2 },
+                                    { type: 'text', text: data.transRef, size: 'xs', color: '#111827', flex: 4, align: 'end' }
                                 ]
                             }
                         ]
@@ -97,16 +208,127 @@ function createSuccessFlexMessage(data) {
                     {
                         type: 'box',
                         layout: 'vertical',
-                        backgroundColor: '#F3F4F6',
+                        backgroundColor: '#ECFDF5',
                         cornerRadius: '8px',
                         paddingAll: '12px',
-                        margin: 'lg',
+                        margin: 'md',
                         contents: [
                             {
                                 type: 'text',
-                                text: '🎉 ระบบบันทึกออเดอร์แล้ว ทางร้านกำลังดำเนินการจัดเตรียมสินค้า/บริการให้ท่านครับ',
+                                text: '🎉 ระบบบันทึกออเดอร์แล้ว ทางร้านกำลังดำเนินการจัดเตรียมส่งมอบให้ท่านครับ',
                                 size: 'xs',
-                                color: '#4B5563',
+                                color: '#065F46',
+                                wrap: true,
+                                align: 'center'
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    };
+}
+/**
+ * สร้าง Flex Message แจ้งเตือนเมื่อยอดเงิน "โอนไม่ครบ" (Underpayment Alert)
+ */
+function createUnderpaidFlexMessage(data) {
+    return {
+        type: 'flex',
+        altText: `⚠️ ยอดเงินยังไม่ครบ (ขาดอีก ฿${data.remainingAmount.toLocaleString('th-TH')})`,
+        contents: {
+            type: 'bubble',
+            header: {
+                type: 'box',
+                layout: 'vertical',
+                backgroundColor: '#F59E0B',
+                paddingAll: '16px',
+                contents: [
+                    {
+                        type: 'text',
+                        text: '⚠️ ยอดชำระเงินยังไม่ครบถ้วน',
+                        weight: 'bold',
+                        color: '#FFFFFF',
+                        size: 'md',
+                        align: 'center'
+                    }
+                ]
+            },
+            body: {
+                type: 'box',
+                layout: 'vertical',
+                spacing: 'md',
+                contents: [
+                    {
+                        type: 'box',
+                        layout: 'vertical',
+                        contents: [
+                            {
+                                type: 'text',
+                                text: 'ยอดคงค้างชำระเพิ่ม',
+                                size: 'xs',
+                                color: '#EF4444',
+                                align: 'center',
+                                weight: 'bold'
+                            },
+                            {
+                                type: 'text',
+                                text: `฿${data.remainingAmount.toLocaleString('th-TH', { minimumFractionDigits: 2 })}`,
+                                size: 'xxl',
+                                weight: 'bold',
+                                align: 'center',
+                                color: '#DC2626'
+                            }
+                        ]
+                    },
+                    {
+                        type: 'separator',
+                        margin: 'md'
+                    },
+                    {
+                        type: 'box',
+                        layout: 'vertical',
+                        margin: 'md',
+                        spacing: 'sm',
+                        contents: [
+                            {
+                                type: 'box',
+                                layout: 'horizontal',
+                                contents: [
+                                    { type: 'text', text: 'ยอดที่ต้องชำระ:', size: 'sm', color: '#6B7280', flex: 3 },
+                                    { type: 'text', text: `฿${data.expectedAmount.toLocaleString('th-TH')}`, size: 'sm', color: '#111827', flex: 3, align: 'end' }
+                                ]
+                            },
+                            {
+                                type: 'box',
+                                layout: 'horizontal',
+                                contents: [
+                                    { type: 'text', text: 'ยอดที่โอนมา:', size: 'sm', color: '#6B7280', flex: 3 },
+                                    { type: 'text', text: `฿${data.actualAmount.toLocaleString('th-TH')}`, size: 'sm', color: '#10B981', flex: 3, align: 'end' }
+                                ]
+                            },
+                            {
+                                type: 'box',
+                                layout: 'horizontal',
+                                contents: [
+                                    { type: 'text', text: 'เลขอ้างอิงสลิป:', size: 'sm', color: '#6B7280', flex: 3 },
+                                    { type: 'text', text: data.transRef, size: 'xs', color: '#111827', flex: 3, align: 'end' }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        type: 'box',
+                        layout: 'vertical',
+                        backgroundColor: '#FEF2F2',
+                        cornerRadius: '8px',
+                        paddingAll: '12px',
+                        margin: 'md',
+                        contents: [
+                            {
+                                type: 'text',
+                                text: `💡 กรุณาโอนเงินส่วนที่เหลือ ฿${data.remainingAmount.toLocaleString('th-TH')} และส่งรูปสลิปอีกครั้งเพื่อเปิดใช้งานออเดอร์ครับ`,
+                                size: 'xs',
+                                color: '#991B1B',
                                 wrap: true,
                                 align: 'center'
                             }
@@ -122,4 +344,90 @@ function createSuccessFlexMessage(data) {
  */
 function createFailedTextMessage(reason) {
     return `⚠️ ไม่สามารถยืนยันยอดเงินจากสลิปนี้ได้\nสาเหตุ: ${reason}\n\nหากท่านได้โอนเงินจริง กรุณารอแอดมินเข้ามาตรวจสอบให้สักครู่นะครับ 🙏`;
+}
+/**
+ * สร้าง Flex Message ต้อนรับและแนะนำวิธีทดสอบ (Welcome & Onboarding)
+ */
+function createWelcomeFlexMessage() {
+    return {
+        type: 'flex',
+        altText: '✨ ยินดีต้อนรับสู่ AutoFlow Bot (พิมพ์เพื่อเริ่มทดสอบ)',
+        contents: {
+            type: 'bubble',
+            header: {
+                type: 'box',
+                layout: 'vertical',
+                backgroundColor: '#0056ff',
+                paddingAll: '16px',
+                contents: [
+                    {
+                        type: 'text',
+                        text: '✨ ยินดีต้อนรับสู่ AutoFlow',
+                        weight: 'bold',
+                        color: '#FFFFFF',
+                        size: 'lg',
+                        align: 'center'
+                    }
+                ]
+            },
+            body: {
+                type: 'box',
+                layout: 'vertical',
+                spacing: 'md',
+                contents: [
+                    {
+                        type: 'text',
+                        text: 'นี่คือบอททดสอบระบบตรวจสลิปอัตโนมัติ 🚀 ลองกดปุ่มด้านล่างเพื่อเริ่มเล่นได้เลยครับ!',
+                        size: 'sm',
+                        color: '#4B5563',
+                        wrap: true,
+                        align: 'center'
+                    },
+                    {
+                        type: 'separator',
+                        margin: 'md'
+                    },
+                    {
+                        type: 'box',
+                        layout: 'vertical',
+                        spacing: 'sm',
+                        margin: 'md',
+                        contents: [
+                            {
+                                type: 'button',
+                                style: 'primary',
+                                color: '#3B82F6',
+                                height: 'sm',
+                                action: {
+                                    type: 'message',
+                                    label: '🛍️ ดูรายการสินค้า (จำลองสั่งซื้อ)',
+                                    text: 'ดูสินค้า'
+                                }
+                            },
+                            {
+                                type: 'button',
+                                style: 'secondary',
+                                height: 'sm',
+                                action: {
+                                    type: 'message',
+                                    label: '🤖 ทดสอบ AI คุยโต้ตอบ',
+                                    text: 'รับทำระบบตรวจสลิปไหมครับ?'
+                                }
+                            },
+                            {
+                                type: 'button',
+                                style: 'secondary',
+                                height: 'sm',
+                                action: {
+                                    type: 'message',
+                                    label: '💡 วิธีการใช้งาน',
+                                    text: 'ใช้งานยังไง'
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    };
 }

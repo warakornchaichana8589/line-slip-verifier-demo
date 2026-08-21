@@ -32,3 +32,9 @@ npm run dev
 ## 🌐 การ Deploy ขึ้น Cloud ฟรี (Zero-Cost Hosting)
 * สามารถ Deploy ขึ้น **Render.com / Railway.app / Vercel Serverless / Cloudflare Workers** ได้ฟรี
 * ใช้ **ngrok** สำหรับทดสอบ Webhook บนเครื่องตัวเองก่อนขึ้น Production
+
+---
+
+## 🚀 Production Environment
+* **Domain:** `slip.zyncoder.com`
+* **LINE Webhook URL:** `https://slip.zyncoder.com/api/webhook` (เปลี่ยนตาม path ที่ใช้งานจริง)
