@@ -211,7 +211,15 @@ async function handleEvent(event) {
             });
             return null;
         }
-        // 2.3 ขอเมนู / แคตตาล็อกสินค้า
+        // 2.3 ขอเมนูบริการทั้งหมดของ Agency
+        if (text.includes('บริการ') || text.includes('service') || text.includes('โซลูชัน')) {
+            await client.replyMessage({
+                replyToken: replyToken,
+                messages: [(0, lineFlex_js_1.createAgencyServicesFlexMessage)()]
+            });
+            return null;
+        }
+        // 2.4 ขอเมนู / แคตตาล็อกสินค้า Demo
         if (text.includes('สินค้า') || text.includes('เมนู') || text.includes('ซื้อ') || text.includes('สั่ง')) {
             await client.replyMessage({
                 replyToken: replyToken,

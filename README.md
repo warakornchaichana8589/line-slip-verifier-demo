@@ -38,3 +38,19 @@ npm run dev
 ## 🚀 Production Environment
 * **Domain:** `slip.zyncoder.com`
 * **LINE Webhook URL:** `https://slip.zyncoder.com/api/webhook` (เปลี่ยนตาม path ที่ใช้งานจริง)
+
+---
+
+## 🎨 ZynCoder Studio LINE Rich Menu
+
+Generate the 2500×1686 PNG with Pillow:
+
+```bash
+python -m pip install Pillow
+python scripts/generate-rich-menu.py
+```
+
+The finished image is saved to `output/rich-menu/zyncoder-studio-rich-menu.png`.
+The script also prints the six tap-area rectangles for creating the matching
+actions in LINE Official Account Manager. Edit the `CARDS` list in the script
+to change the copy, colours, or menu destinations.

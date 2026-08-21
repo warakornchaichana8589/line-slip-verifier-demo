@@ -12,6 +12,7 @@ import {
   createSuccessFlexMessage,
   createUnderpaidFlexMessage,
   createProductCatalogFlexMessage,
+  createAgencyServicesFlexMessage,
   createFailedTextMessage,
   createWelcomeFlexMessage
 } from './services/lineFlex.js';
@@ -253,7 +254,16 @@ async function handleEvent(event: WebhookEvent) {
       return null;
     }
 
-    // 2.3 ขอเมนู / แคตตาล็อกสินค้า
+    // 2.3 ขอเมนูบริการทั้งหมดของ Agency
+    if (text.includes('บริการ') || text.includes('service') || text.includes('โซลูชัน')) {
+      await client.replyMessage({
+        replyToken: replyToken,
+        messages: [createAgencyServicesFlexMessage()]
+      });
+      return null;
+    }
+
+    // 2.4 ขอเมนู / แคตตาล็อกสินค้า Demo
     if (text.includes('สินค้า') || text.includes('เมนู') || text.includes('ซื้อ') || text.includes('สั่ง')) {
       await client.replyMessage({
         replyToken: replyToken,

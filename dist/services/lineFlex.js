@@ -5,6 +5,7 @@ exports.createSuccessFlexMessage = createSuccessFlexMessage;
 exports.createUnderpaidFlexMessage = createUnderpaidFlexMessage;
 exports.createFailedTextMessage = createFailedTextMessage;
 exports.createWelcomeFlexMessage = createWelcomeFlexMessage;
+exports.createAgencyServicesFlexMessage = createAgencyServicesFlexMessage;
 /**
  * สร้าง Flex Message แสดงรายการสินค้าตัวอย่างและปุ่มสั่งซื้อ
  */
@@ -346,27 +347,35 @@ function createFailedTextMessage(reason) {
     return `⚠️ ไม่สามารถยืนยันยอดเงินจากสลิปนี้ได้\nสาเหตุ: ${reason}\n\nหากท่านได้โอนเงินจริง กรุณารอแอดมินเข้ามาตรวจสอบให้สักครู่นะครับ 🙏`;
 }
 /**
- * สร้าง Flex Message ต้อนรับและแนะนำวิธีทดสอบ (Welcome & Onboarding)
+ * สร้าง Flex Message ต้อนรับเพื่อนใหม่ของ ZynCoder Studio
  */
 function createWelcomeFlexMessage() {
     return {
         type: 'flex',
-        altText: '✨ ยินดีต้อนรับสู่ AutoFlow Bot (พิมพ์เพื่อเริ่มทดสอบ)',
+        altText: '✨ ยินดีต้อนรับสู่ ZynCoder Studio | รับพัฒนาระบบ & บอทธุรกิจ',
         contents: {
             type: 'bubble',
             header: {
                 type: 'box',
                 layout: 'vertical',
-                backgroundColor: '#0056ff',
+                backgroundColor: '#0F172A',
                 paddingAll: '16px',
                 contents: [
                     {
                         type: 'text',
-                        text: '✨ ยินดีต้อนรับสู่ AutoFlow',
+                        text: '⚡ ZynCoder Studio',
                         weight: 'bold',
-                        color: '#FFFFFF',
+                        color: '#38BDF8',
                         size: 'lg',
                         align: 'center'
+                    },
+                    {
+                        type: 'text',
+                        text: 'รับพัฒนาระบบ บอท & Automation ครบวงจร',
+                        size: 'xs',
+                        color: '#94A3B8',
+                        align: 'center',
+                        margin: 'xs'
                     }
                 ]
             },
@@ -377,11 +386,10 @@ function createWelcomeFlexMessage() {
                 contents: [
                     {
                         type: 'text',
-                        text: 'นี่คือบอททดสอบระบบตรวจสลิปอัตโนมัติ 🚀 ลองกดปุ่มด้านล่างเพื่อเริ่มเล่นได้เลยครับ!',
+                        text: 'สวัสดีครับ! เราคือทีมพัฒนาระบบ ซอฟต์แวร์ และ Automation ช่วยให้ธุรกิจของคุณทำงานง่ายขึ้นและเติบโตได้ไวยิ่งขึ้น 🚀',
                         size: 'sm',
-                        color: '#4B5563',
-                        wrap: true,
-                        align: 'center'
+                        color: '#334155',
+                        wrap: true
                     },
                     {
                         type: 'separator',
@@ -396,12 +404,12 @@ function createWelcomeFlexMessage() {
                             {
                                 type: 'button',
                                 style: 'primary',
-                                color: '#3B82F6',
+                                color: '#0284C7',
                                 height: 'sm',
                                 action: {
                                     type: 'message',
-                                    label: '🛍️ ดูรายการสินค้า (จำลองสั่งซื้อ)',
-                                    text: 'ดูสินค้า'
+                                    label: '🚀 ปรึกษา & ประเมินราคาฟรี',
+                                    text: 'ประเมินราคาระบบ'
                                 }
                             },
                             {
@@ -410,24 +418,262 @@ function createWelcomeFlexMessage() {
                                 height: 'sm',
                                 action: {
                                     type: 'message',
-                                    label: '🤖 ทดสอบ AI คุยโต้ตอบ',
-                                    text: 'รับทำระบบตรวจสลิปไหมครับ?'
+                                    label: '🛠️ ดูบริการทั้งหมด',
+                                    text: 'ดูบริการทั้งหมด'
                                 }
                             },
                             {
                                 type: 'button',
-                                style: 'secondary',
+                                style: 'link',
                                 height: 'sm',
                                 action: {
-                                    type: 'message',
-                                    label: '💡 วิธีการใช้งาน',
-                                    text: 'ใช้งานยังไง'
+                                    type: 'uri',
+                                    label: '📱 ทดลองระบบ Demo',
+                                    uri: 'https://slip.zyncoder.com'
                                 }
                             }
                         ]
                     }
                 ]
             }
+        }
+    };
+}
+/**
+ * สร้าง Flex Message แสดงบริการทั้งหมดของ ZynCoder Studio (Agency Catalog)
+ */
+function createAgencyServicesFlexMessage() {
+    return {
+        type: 'flex',
+        altText: '🛠️ บริการทั้งหมดของ ZynCoder Studio',
+        contents: {
+            type: 'carousel',
+            contents: [
+                {
+                    type: 'bubble',
+                    size: 'kilo',
+                    header: {
+                        type: 'box',
+                        layout: 'vertical',
+                        backgroundColor: '#0284C7',
+                        contents: [
+                            {
+                                type: 'text',
+                                text: '🤖 LINE Bot & ตรวจสลิป 24 ชม.',
+                                weight: 'bold',
+                                color: '#FFFFFF',
+                                size: 'sm'
+                            }
+                        ]
+                    },
+                    body: {
+                        type: 'box',
+                        layout: 'vertical',
+                        spacing: 'sm',
+                        contents: [
+                            {
+                                type: 'text',
+                                text: 'เริ่มต้น ฿1,500 - ฿3,500',
+                                weight: 'bold',
+                                size: 'lg',
+                                color: '#0369A1'
+                            },
+                            {
+                                type: 'text',
+                                text: '• กันสลิปปลอม/สลิปวน 100%\n• บอทตอบแชท & ยืนยันยอดดึก\n• บันทึกยอดลง Google Sheets ทันที',
+                                size: 'xs',
+                                color: '#475569',
+                                wrap: true
+                            }
+                        ]
+                    },
+                    footer: {
+                        type: 'box',
+                        layout: 'vertical',
+                        contents: [
+                            {
+                                type: 'button',
+                                style: 'primary',
+                                color: '#0284C7',
+                                height: 'sm',
+                                action: {
+                                    type: 'message',
+                                    label: 'สนใจระบบนี้',
+                                    text: 'สนใจระบบ LINE Bot ตรวจสลิป'
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    type: 'bubble',
+                    size: 'kilo',
+                    header: {
+                        type: 'box',
+                        layout: 'vertical',
+                        backgroundColor: '#4F46E5',
+                        contents: [
+                            {
+                                type: 'text',
+                                text: '🌐 Web App & Dashboard',
+                                weight: 'bold',
+                                color: '#FFFFFF',
+                                size: 'sm'
+                            }
+                        ]
+                    },
+                    body: {
+                        type: 'box',
+                        layout: 'vertical',
+                        spacing: 'sm',
+                        contents: [
+                            {
+                                type: 'text',
+                                text: 'เริ่มต้น ฿6,500 - ฿18,000+',
+                                weight: 'bold',
+                                size: 'lg',
+                                color: '#3730A3'
+                            },
+                            {
+                                type: 'text',
+                                text: '• ระบบจัดการออเดอร์/สต็อก\n• แดชบอร์ดสรุปยอดขาย Real-time\n• พัฒนาด้วย Next.js / Node.js ทันสมัย',
+                                size: 'xs',
+                                color: '#475569',
+                                wrap: true
+                            }
+                        ]
+                    },
+                    footer: {
+                        type: 'box',
+                        layout: 'vertical',
+                        contents: [
+                            {
+                                type: 'button',
+                                style: 'primary',
+                                color: '#4F46E5',
+                                height: 'sm',
+                                action: {
+                                    type: 'message',
+                                    label: 'สนใจทำ Web App',
+                                    text: 'สนใจพัฒนาระบบ Web App / Dashboard'
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    type: 'bubble',
+                    size: 'kilo',
+                    header: {
+                        type: 'box',
+                        layout: 'vertical',
+                        backgroundColor: '#059669',
+                        contents: [
+                            {
+                                type: 'text',
+                                text: '🚀 AI & Auto-Post Marketing',
+                                weight: 'bold',
+                                color: '#FFFFFF',
+                                size: 'sm'
+                            }
+                        ]
+                    },
+                    body: {
+                        type: 'box',
+                        layout: 'vertical',
+                        spacing: 'sm',
+                        contents: [
+                            {
+                                type: 'text',
+                                text: 'เริ่มต้น ฿3,500 - ฿7,500',
+                                weight: 'bold',
+                                size: 'lg',
+                                color: '#065F46'
+                            },
+                            {
+                                type: 'text',
+                                text: '• ระบบ AI โพสต์ FB อัตโนมัติ\n• สร้างภาพและแคปชั่นภาษาไทย\n• บอทดักจับคอมเมนต์ & ตอบแชท 24 ชม.',
+                                size: 'xs',
+                                color: '#475569',
+                                wrap: true
+                            }
+                        ]
+                    },
+                    footer: {
+                        type: 'box',
+                        layout: 'vertical',
+                        contents: [
+                            {
+                                type: 'button',
+                                style: 'primary',
+                                color: '#059669',
+                                height: 'sm',
+                                action: {
+                                    type: 'message',
+                                    label: 'สนใจระบบ AI Marketing',
+                                    text: 'สนใจระบบ Facebook Auto-Post & AI'
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    type: 'bubble',
+                    size: 'kilo',
+                    header: {
+                        type: 'box',
+                        layout: 'vertical',
+                        backgroundColor: '#9333EA',
+                        contents: [
+                            {
+                                type: 'text',
+                                text: '📊 Data Sync & Custom APIs',
+                                weight: 'bold',
+                                color: '#FFFFFF',
+                                size: 'sm'
+                            }
+                        ]
+                    },
+                    body: {
+                        type: 'box',
+                        layout: 'vertical',
+                        spacing: 'sm',
+                        contents: [
+                            {
+                                type: 'text',
+                                text: 'ประเมินตาม Scope',
+                                weight: 'bold',
+                                size: 'lg',
+                                color: '#6B21A8'
+                            },
+                            {
+                                type: 'text',
+                                text: '• เชื่อม Google Sheets / Notion / ERP\n• ระบบแจ้งเตือน Discord / LINE Notify\n• พัฒนาและเชื่อมต่อ REST API ตามสั่ง',
+                                size: 'xs',
+                                color: '#475569',
+                                wrap: true
+                            }
+                        ]
+                    },
+                    footer: {
+                        type: 'box',
+                        layout: 'vertical',
+                        contents: [
+                            {
+                                type: 'button',
+                                style: 'primary',
+                                color: '#9333EA',
+                                height: 'sm',
+                                action: {
+                                    type: 'message',
+                                    label: 'ปรึกษาโจทย์นี้',
+                                    text: 'ต้องการเชื่อมต่อข้อมูลและ Custom API'
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
         }
     };
 }
